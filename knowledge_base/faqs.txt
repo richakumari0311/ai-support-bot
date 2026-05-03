@@ -1,0 +1,29 @@
+Q: How do I reset my password?
+A: Go to the login page and click "Forgot Password". Enter your email address and we'll send you a reset link within 2 minutes. Check your spam folder if you don't see it.
+
+Q: What is your refund policy?
+A: We offer a full refund within 30 days of purchase. Items must be unused and in original packaging. To start a refund, email support@shopexample.com with your order number.
+
+Q: How long does shipping take?
+A: Standard shipping takes 5-7 business days. Express shipping takes 1-2 business days. International orders take 10-15 business days.
+
+Q: How do I track my order?
+A: Once your order ships, you'll receive a tracking email. You can also log into your account and go to "My Orders" to see live tracking updates.
+
+Q: Can I change or cancel my order?
+A: Orders can be changed or cancelled within 1 hour of placing them. After that, the order is sent to our warehouse and cannot be modified. Contact support@shopexample.com immediately if you need to cancel.
+
+Q: What payment methods do you accept?
+A: We accept Visa, Mastercard, American Express, PayPal, and Apple Pay. All payments are encrypted and secure.
+
+Q: My item arrived damaged. What do I do?
+A: We're sorry to hear that! Please email support@shopexample.com with your order number and a photo of the damaged item. We'll send a replacement or issue a full refund within 24 hours.
+
+Q: Do you ship internationally?
+A: Yes! We ship to over 50 countries. International shipping costs are calculated at checkout based on your location and order weight.
+
+Q: How do I contact customer support?
+A: You can reach us at support@shopexample.com or call us at 1-800-SHOP-123, Monday to Friday, 9am to 6pm EST. Average response time is under 2 hours.
+
+Q: Do you have a loyalty rewards program?
+A: Yes! Every purchase earns you points. 100 points = $1 discount. You can view your points balance in your account dashboard under "Rewards".
