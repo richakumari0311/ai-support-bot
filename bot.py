@@ -3,7 +3,16 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 import ollama
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
+
+from langchain_community.document_loaders import TextLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+import ollama
 
 # Load & chunk the FAQ file
 def load_knowledge_base(filepath="knowledge_base/faqs.txt"):

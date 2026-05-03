@@ -1,31 +1,44 @@
-import ollama
+import gradio as gr
+import os
+from bot import(
+    load_knowledge_base,
+    build_vector_store,
+    load_vector_store,
+    ask_bot
+)
 
-def ask_bot(user_question):
-    response = ollama.chat(
-        model="mistral",
-        messages=[
-            {
-                "role": "system",
-                "content": """You are a helpful customer support assitant.
-                Be polite, concise, and friendly.
-                If you don't know the answer, say so honestly and suggest the user to contact support@comapny.com"""
-            },
-            {
-                "role": "user",
-                "content": "user_question"
-            }
-        ]     
-    )   
-    return(response["message"]["content"])
+# Load or build vector store on stratup
+print("Starting AI Support Bot!")
 
-#Test
+if not os.path.exists("chroma_db"):
+    chunks = load_knowledge_base()
+    vector_store = build_vector_store(chunks)
+else:
+    vector_store = load_vector_store()
+print("Bot is ready!\n")
+
+# Chat function Gradio will call
+
+def chat(user_message, history):
+    return ask_bot(vector_store, user_message)
+
+# Launch with ChatInterface
+app = gr.ChatInterface(
+    fn=chat,
+    title="AI Customer Support Bot",
+    description=(
+        "**Fully offline | Powered by Mistral | Built with LangChain + ChromaDB**\n\n"
+        "Ask me anything about orders, refunds, shipping, payments and more!\n\n"
+        "**Try:** `Where is my order?` | `How do I get a refund?` | "
+        "`Do you accept PayPal?` | `My package arrived broken` | `How do I earn reward points?`"
+    )
+)
+    
+# Launch
 if __name__ == "__main__":
-    questions = [
-        "How do I reset my password?"
-        "What is your refund policy?"
-        "My order hasn't arrived yet."
-    ]
-    for q in questions:
-        print(f"\n User: {q}")
-        print(f"Bot: {ask_bot(q)}")
-        print("-" * 50)
+    app.launch(
+        server_name="0.0.0.0",
+        server_port=7860,
+        show_error=True
+    )
+
