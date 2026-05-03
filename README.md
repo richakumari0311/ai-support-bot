@@ -27,22 +27,30 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Install Ollama and pull Mistral
+### 3. Modifying dependencies
+Direct dependencies are listed in `requirements.in`.
+After editing it, recompile with:
+```bash
+pip-compile requirements.in --no-annotate --no-header
+pip install -r requirements.txt
+```
+
+### 4. Install Ollama and pull Mistral
 ```bash
 # Install from https://ollama.com
 ollama pull mistral
 ```
 
-### 4. Add your HuggingFace token
+### 5. Add your HuggingFace token
 ```bash
 cp .env.example .env
 # Edit .env and add your HF_TOKEN
 ```
 
-### 5. Add your FAQs
+### 6. Add your FAQs
 Edit `knowledge_base/faqs.txt` with your own Q&A pairs.
 
-### 6. Run the bot
+### 7. Run the bot
 ```bash
 python main.py
 ```
