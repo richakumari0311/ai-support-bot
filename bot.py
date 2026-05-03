@@ -2,17 +2,12 @@ from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
+import shutil
 import ollama
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
-
-from langchain_community.document_loaders import TextLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
-import ollama
 
 # Load & chunk the FAQ file
 def load_knowledge_base(filepath="knowledge_base/faqs.txt"):
@@ -72,21 +67,35 @@ def ask_bot(vector_store, user_question):
 
     # Build prompt with context injected
     prompt = f"""You are a helpful customer support assiatant.
-    Use ONLY the information below to answer the questions.
-    If the answer is not in the information below, say:
-    "I don't have that information, Please contact support@company.com"
+    STRICT RULES:
+    - Answer ONLY using the knowledge base below
+    - Keep answers concise and friendly (2-4 sentences max)
+    - If the answer isn't in the knowledge base, say exactly:
+    "I don't have that information yet. Please contact support@shopexample.com or call 1-800-SHOP-123."
+    - Never make up information or guess
+    - Always end with "Is there anything else I can help you with?"
+    --- KNOWLEDGE BASE ---
+    {context}
+    --- END ---
 
---- KNOWLEDGE BASE ---
-{context}
---- END ---
-
-Customer question: {user_question}
-Answer:"""
+    Customer question: {user_question}
+    Support Agent:"""
     response = ollama.chat(
         model="mistral",
         messages=[{"role": "user", "content":prompt}]
     )
     return response["message"]["content"]
+
+# Reload knowledge base when FAQs change
+def reload_knowledge_base(persist_dir="chroma_db"):
+    """Delete and rebuild the vector store from the latest FAQs."""
+    if os.path.exists(persist_dir):
+        shutil.rmtree(persist_dir)
+        print("Old vector store deleted")
+    chunks = load_knowledge_base()
+    vector_store = build_vector_store(chunks)
+    print("Knowledge base reloaded!")
+    return vector_store
 
 # Build store once and then test
 if __name__ == "__main__":
